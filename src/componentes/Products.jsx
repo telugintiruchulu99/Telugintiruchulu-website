@@ -1,5 +1,5 @@
 import { useState } from "react";
-import products from "./temp";
+import products from "./productsData";
 
 function ProductCard({ item, addToCart }) {
   const [selectedSize, setSelectedSize] = useState("250g");
