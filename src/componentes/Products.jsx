@@ -1,227 +1,108 @@
 import { useState } from "react";
-import products from "./productsData.js";
+import ProductCard from "./ProductCard";
+import products from "./productsData";
 
-function ProductCard({ item, addToCart }) {
-  const [selectedSize, setSelectedSize] = useState("250g");
-
-  return (
-    <div
-      style={{
-        width: "100%",
-        maxWidth: "280px",
-        background: "#fff",
-        borderRadius: "12px",
-        padding: "20px",
-        textAlign: "center",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          height: "180px",
-          background: "#f2f2f2",
-          borderRadius: "10px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: "50px",
-          marginBottom: "15px",
-        }}
-      >
-        📦
-      </div>
-
-      <h3>{item.name}</h3>
-
-      <select
-        value={selectedSize}
-        onChange={(e) => setSelectedSize(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "15px",
-          borderRadius: "6px",
-        }}
-      >
-        <option value="250g">
-          250g - ₹{item.prices["250g"]}
-        </option>
-
-        <option value="500g">
-          500g - ₹{item.prices["500g"]}
-        </option>
-
-        <option value="1kg">
-          1kg - ₹{item.prices["1kg"]}
-        </option>
-      </select>
-
-      <button
-        style={{
-          width: "100%",
-          padding: "10px",
-          background: "#ff9800",
-          color: "#fff",
-          border: "none",
-          borderRadius: "6px",
-          marginBottom: "10px",
-          cursor: "pointer",
-        }}
-      >
-        Buy Now
-      </button>
-
-      <button
-        onClick={() =>
-          addToCart({
-            ...item,
-            selectedSize,
-            selectedPrice: item.prices[selectedSize],
-          })
-        }
-        style={{
-          width: "100%",
-          padding: "10px",
-          background: "green",
-          color: "#fff",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer",
-        }}
-      >
-        Add to Cart
-      </button>
-    </div>
-  );
-}
-function ProductSection({ title, items, addToCart }) {
-  return (
-    <>
-      <h2
-        style={{
-          color: "#d35400",
-          marginTop: "40px",
-          marginBottom: "20px",
-          textAlign: "center",
-        }}
-      >
-        {title}
-      </h2>
-
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          gap: "20px",
-        }}
-      >
-        {items.map((item, index) => (
-          <ProductCard
-            key={index}
-            item={item}
-            addToCart={addToCart}
-          />
-        ))}
-      </div>
-    </>
-  );
-}
+const categories = [
+  "Veg",
+  "NonVeg",
+  "Podi",
+  "Snacks",
+  "Sweets",
+];
 
 function Products({ addToCart, search }) {
-  const filteredProducts = products.filter((product) =>
-    product.name
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const filteredProducts = products.filter((product) => {
+    const categoryMatch =
+      selectedCategory === ""
+        ? true
+        : product.category === selectedCategory;
+
+    const searchMatch = product.name
       .toLowerCase()
-      .includes((search || "").toLowerCase())
-  );
+      .includes(search.toLowerCase());
 
-  const veg = filteredProducts.filter(
-    (p) => p.category === "Veg"
-  );
-
-  const nonVeg = filteredProducts.filter(
-    (p) => p.category === "NonVeg"
-  );
-
-  const podi = filteredProducts.filter(
-    (p) => p.category === "Podi"
-  );
-
-  const snacks = filteredProducts.filter(
-    (p) => p.category === "Snack"
-  );
-
-  const sweets = filteredProducts.filter(
-    (p) => p.category === "Sweet"
-  );
+    return categoryMatch && searchMatch;
+  });
 
   return (
     <section
+      id="products"
       style={{
-        padding: "20px",
-        background: "#f8f8f8",
+        padding: "40px 15px",
+        background: "#FFF8EE",
       }}
     >
-      <h1
-        style={{
-          textAlign: "center",
-          color: "#d35400",
-        }}
-      >
-        🛍 Our Products
-      </h1>
-
-      <p
-        style={{
-          textAlign: "center",
-          color: "#555",
-          marginBottom: "30px",
-        }}
-      >
-        Total Products: {filteredProducts.length}
-      </p>
-      <ProductSection
-        title="🌿 Veg Pickles"
-        items={veg}
-        addToCart={addToCart}
-      />
-
-      <ProductSection
-        title="🍗 Non-Veg Pickles"
-        items={nonVeg}
-        addToCart={addToCart}
-      />
-
-      <ProductSection
-        title="🥣 Podis"
-        items={podi}
-        addToCart={addToCart}
-      />
-
-      <ProductSection
-        title="🍘 Snacks"
-        items={snacks}
-        addToCart={addToCart}
-      />
-
-      <ProductSection
-        title="🍬 Sweets"
-        items={sweets}
-        addToCart={addToCart}
-      />
-
-      {filteredProducts.length === 0 && (
+      <div style={{ maxWidth: "1200px", margin: "auto" }}>
         <h2
           style={{
             textAlign: "center",
-            color: "red",
-            marginTop: "40px",
+            fontSize: "38px",
+            color: "#E67E22",
+            marginBottom: "30px",
           }}
         >
-          😔 No Products Found
+          Our Products
         </h2>
-      )}
+
+        {/* Category Buttons */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "12px",
+            flexWrap: "wrap",
+            marginBottom: "30px",
+          }}
+        >
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              style={{
+                background:
+                  selectedCategory === category ? "#E67E22" : "#2E7D32",
+                color: "#fff",
+                border: "none",
+                borderRadius: "30px",
+                padding: "12px 18px",
+                fontSize: "15px",
+                fontWeight: "700",
+                cursor: "pointer",
+              }}
+            >
+              {category === "Veg" && "🌿 Veg"}
+              {category === "NonVeg" && "🍗 NonVeg"}
+              {category === "Podi" && "🥣 Podis"}
+              {category === "Snacks" && "🍘 Snacks"}
+              {category === "Sweets" && "🍬 Sweets"}
+            </button>
+          ))}
+        </div>
+
+        {filteredProducts.length === 0 ? (
+          <p style={{ textAlign: "center" }}>
+            No products found.
+          </p>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+              gap: "16px",
+            }}
+          >
+            {filteredProducts.map((product, index) => (
+              <ProductCard
+                key={index}
+                product={product}
+                addToCart={addToCart}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </section>
   );
 }

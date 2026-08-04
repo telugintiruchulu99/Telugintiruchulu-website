@@ -1,49 +1,27 @@
 function Hero() {
   return (
-    <section
-      style={{
-        background: "linear-gradient(135deg, #fff3e0, #ffe0b2)",
-        padding: "100px 20px",
-        textAlign: "center",
-      }}
-    >
-      <h1
-        style={{
-          fontSize: "52px",
-          color: "#d35400",
-          marginBottom: "20px",
-          fontWeight: "bold",
-        }}
-      >
-        🍲 Welcome to Teluginti Ruchulu
+    <section className="hero">
+      <h1 className="hero-title">
+        TELUGINTI <br />
+        RUCHULU
       </h1>
 
-      <p
-        style={{
-          fontSize: "24px",
-          color: "#444",
-          maxWidth: "800px",
-          margin: "auto",
-          lineHeight: "1.8",
-        }}
-      >
-        Taste the authentic homemade Andhra Pickles, Sweets and Traditional
-        Snacks prepared with love and fresh ingredients.
+      <h2 className="hero-subtitle">Homemade</h2>
+
+      <div className="hero-tags">
+        <span>Pickles</span>
+        <span>Podis</span>
+        <span>Snacks</span>
+        <span>Sweets</span>
+      </div>
+
+      <p className="hero-description">
+        Experience the authentic taste of homemade products
+        <br />
+        prepared with traditional recipes, premium ingredients and lots of love.
       </p>
 
-      <button
-        style={{
-          marginTop: "35px",
-          padding: "15px 35px",
-          fontSize: "20px",
-          background: "#e67e22",
-          color: "white",
-          border: "none",
-          borderRadius: "10px",
-          cursor: "pointer",
-          fontWeight: "bold",
-        }}
-      >
+      <button className="shop-btn">
         🛒 Shop Now
       </button>
     </section>

@@ -218,7 +218,7 @@ const products = [
 },
 // 🍘 Snacks
 {
-  category: "Snack",
+  category: "Snacks",
   name: "🍘 Karam Gavvalu",
   prices: {
     "250g": 189,
@@ -227,7 +227,7 @@ const products = [
   },
 },
 {
-  category: "Snack",
+  category: "Snacks",
   name: "🥜 Karaboondi",
   prices: {
     "250g": 189,
@@ -237,7 +237,7 @@ const products = [
 },
 // 🍬 Sweets
 {
-  category: "Sweet",
+  category: "Sweets",
   name: "🍬 Palli Laddu",
   prices: {
     "250g": 139,
@@ -246,7 +246,7 @@ const products = [
   },
 },
 {
-  category: "Sweet",
+  category: "Sweets",
   name: "🥜 Palli Patti",
   prices: {
     "250g": 139,
@@ -255,7 +255,7 @@ const products = [
   },
 },
 {
-  category: "Sweet",
+  category: "Sweets",
   name: "🍡 Rava Laddu",
   prices: {
     "250g": 199,
@@ -264,7 +264,7 @@ const products = [
   },
 },
 {
-  category: "Sweet",
+  category: "Sweets",
   name: "🍯 Ariselu",
   prices: {
     "250g": 199,
@@ -273,7 +273,7 @@ const products = [
   },
 },
 {
-  category: "Sweet",
+  category: "Sweets",
   name: "🥜🍯 Dry Fruit Laddu",
   prices: {
     "250g": 389,

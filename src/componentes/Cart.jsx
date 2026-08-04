@@ -5,12 +5,12 @@ function Cart({
   decreaseQuantity,
 }) {
   const total = cart.reduce(
-    (sum, item) => sum + item.selectedPrice * item.quantity,
+    (sum, item) => sum + Number(item.price) * Number(item.quantity),
     0
   );
 
   return (
-    <section
+    <section id="contact"
       style={{
         padding: "40px",
         background: "#fff",
@@ -40,7 +40,7 @@ function Cart({
               </p>
 
               <p>
-                <b>Price:</b> ₹{item.selectedPrice}
+                <b>Price:</b> ₹{item.price}
               </p>
 
               <div
@@ -87,7 +87,7 @@ function Cart({
               </div>
 
               <p>
-                <b>Subtotal:</b> ₹{item.selectedPrice * item.quantity}
+                <b>Subtotal:</b> ₹{Number(item.price) * item.quantity}
               </p>
 
               <button

@@ -1,12 +1,22 @@
 import { useState } from "react";
 import "./App.css";
+
 import Header from "./componentes/Header";
 import Hero from "./componentes/Hero";
+import BestSellers from "./componentes/BestSellers";
 import Products from "./componentes/Products";
 import Cart from "./componentes/Cart";
 import Checkout from "./componentes/Checkout";
 import Footer from "./componentes/Footer";
 import WhatsAppButton from "./componentes/WhatsAppButton";
+import WhyChooseUs from "./componentes/WhyChooseUs";
+import Reviews from "./componentes/Reviews";
+import FAQ from "./componentes/FAQ";
+import Contact from "./componentes/Contact";
+import OfferBanner from "./componentes/OfferBanner";
+import About from "./componentes/About";
+import BottomNav from "./componentes/BottomNav";
+
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -31,11 +41,6 @@ function App() {
 
       return [...prev, { ...product, quantity: 1 }];
     });
-  };
-
-  // ✅ NEW FUNCTION
-  const placeOrder = () => {
-    setCart([]);
   };
 
   const removeFromCart = (index) => {
@@ -64,6 +69,10 @@ function App() {
     );
   };
 
+  const placeOrder = () => {
+    setCart([]);
+  };
+
   return (
     <div>
       <Header
@@ -73,11 +82,21 @@ function App() {
       />
 
       <Hero />
+      <OfferBanner />
 
-      <Products
-        addToCart={addToCart}
-        search={search}
-      />
+<BestSellers />
+
+<WhyChooseUs />
+
+<Reviews />
+
+<FAQ />
+<About />
+
+<Products
+  addToCart={addToCart}
+  search={search}
+/>
 
       <Cart
         cart={cart}
@@ -87,10 +106,16 @@ function App() {
       />
 
       {cart.length > 0 && (
-        <Checkout placeOrder={placeOrder} />
+        <Checkout
+  cart={cart}
+  placeOrder={placeOrder}
+/>
       )}
+
+      <Contact />
       <Footer />
       <WhatsAppButton />
+      <BottomNav />
     </div>
   );
 }
