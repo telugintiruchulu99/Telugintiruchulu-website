@@ -5,9 +5,9 @@ const products = [
     name: "🥭 Mango Pickle",
     image: "/images/mango-pickle.jpg",
     prices: {
-      "250g": 219,
-      "500g": 349,
-      "1kg": 699,
+      "250g": 1,
+      "500g": 1,
+      "1kg": 1,
     },
   },
   {
