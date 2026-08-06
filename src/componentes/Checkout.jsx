@@ -49,7 +49,7 @@ function Checkout({ cart, placeOrder }) {
     message += `%0A💰 *Total: ₹${total}*`;
 
     const options = {
-      key: "rzp_test_TKsTFWiIOil3LD",
+      key: "rzp_live_TM5cfblnj9a9zM",
       amount: order.amount,
       currency: order.currency,
       name: "Teluginti Ruchulu",

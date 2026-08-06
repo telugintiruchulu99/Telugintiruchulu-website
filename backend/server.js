@@ -40,11 +40,10 @@ app.post("/create-order", async (req, res) => {
     const order = await razorpay.orders.create(options);
 
     res.json(order);
-  } catch (error) {
-    console.error("Razorpay Error:", error);
-    res.status(500).json({ error: error.message });
-  }
-});
+} catch (error) {
+  console.log(error);
+  res.status(500).json({ error: error.message });
+}
 
 // Verify Payment
 app.post("/verify-payment", (req, res) => {
