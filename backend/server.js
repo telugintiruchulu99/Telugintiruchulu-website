@@ -18,12 +18,7 @@ const razorpay = new Razorpay({
 app.get("/", (req, res) => {
   res.send("✅ Teluginti Ruchulu Backend Running");
 });
-app.get("/check-keys", (req, res) => {
-  res.json({
-    key: process.env.RAZORPAY_KEY_ID,
-    hasSecret: !!process.env.RAZORPAY_KEY_SECRET,
-  });
-});
+
 // Create Razorpay Order
 app.post("/create-order", async (req, res) => {
   try {
