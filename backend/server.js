@@ -44,6 +44,7 @@ app.post("/create-order", async (req, res) => {
   console.log(error);
   res.status(500).json({ error: error.message });
 }
+});
 
 // Verify Payment
 app.post("/verify-payment", (req, res) => {
