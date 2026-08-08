@@ -6,7 +6,14 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
+
 app.use(express.json());
 
 const razorpay = new Razorpay({
@@ -14,34 +21,61 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// Test Route
+// =========================
+// HEALTH / TEST ROUTE
+// =========================
 app.get("/", (req, res) => {
-  res.send("✅ Teluginti Ruchulu Backend Running");
+  res.status(200).send("✅ Teluginti Ruchulu Backend Running");
 });
 
-// Create Razorpay Order
+// =========================
+// CREATE RAZORPAY ORDER
+// =========================
 app.post("/create-order", async (req, res) => {
-  try {
-    console.log("Request Body:", req.body);
+  const startTime = Date.now();
 
+  try {
     const { amount } = req.body;
 
+    if (!amount || Number(amount) <= 0) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid amount",
+      });
+    }
+
+    const numericAmount = Number(amount);
+
+    console.log("💰 Creating Razorpay order:", numericAmount);
+
     const options = {
-      amount: amount * 100,
+      amount: Math.round(numericAmount * 100),
       currency: "INR",
-      receipt: "receipt_" + Date.now(),
+      receipt: `receipt_${Date.now()}`,
     };
 
     const order = await razorpay.orders.create(options);
 
-    res.json(order);
-} catch (error) {
-  console.log(error);
-  res.status(500).json({ error: error.message });
-}
+    console.log(
+      "✅ Razorpay order created:",
+      order.id,
+      `(${Date.now() - startTime}ms)`
+    );
+
+    return res.status(200).json(order);
+  } catch (error) {
+    console.error("❌ Create Order Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      error: "Unable to create Razorpay order",
+    });
+  }
 });
 
-// Verify Payment
+// =========================
+// VERIFY PAYMENT
+// =========================
 app.post("/verify-payment", (req, res) => {
   try {
     const {
@@ -50,26 +84,55 @@ app.post("/verify-payment", (req, res) => {
       razorpay_signature,
     } = req.body;
 
-    const sign = razorpay_order_id + "|" + razorpay_payment_id;
+    if (
+      !razorpay_order_id ||
+      !razorpay_payment_id ||
+      !razorpay_signature
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing payment verification details",
+      });
+    }
+
+    const sign =
+      razorpay_order_id +
+      "|" +
+      razorpay_payment_id;
 
     const expectedSign = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-      .update(sign.toString())
+      .createHmac(
+        "sha256",
+        process.env.RAZORPAY_KEY_SECRET
+      )
+      .update(sign)
       .digest("hex");
 
-    if (expectedSign === razorpay_signature) {
-      return res.json({
-        success: true,
-        message: "Payment Verified Successfully",
-      });
-    } else {
+    const isValid =
+      expectedSign === razorpay_signature;
+
+    if (!isValid) {
       return res.status(400).json({
         success: false,
         message: "Payment Verification Failed",
       });
     }
-  } catch (err) {
-    console.error(err);
+
+    console.log(
+      "✅ Payment verified:",
+      razorpay_payment_id
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Payment Verified Successfully",
+    });
+  } catch (error) {
+    console.error(
+      "❌ Payment Verification Error:",
+      error
+    );
+
     return res.status(500).json({
       success: false,
       message: "Server Error",
@@ -77,8 +140,13 @@ app.post("/verify-payment", (req, res) => {
   }
 });
 
+// =========================
+// START SERVER
+// =========================
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(
+    `🚀 Teluginti Ruchulu Backend running on port ${PORT}`
+  );
 });

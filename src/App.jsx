@@ -12,14 +12,12 @@ import WhatsAppButton from "./componentes/WhatsAppButton";
 import WhyChooseUs from "./componentes/WhyChooseUs";
 import Reviews from "./componentes/Reviews";
 import FAQ from "./componentes/FAQ";
-import Contact from "./componentes/Contact";
 import OfferBanner from "./componentes/OfferBanner";
-import About from "./componentes/About";
-import BottomNav from "./componentes/BottomNav";
-
+import CartDrawer from "./componentes/CartDrawer";
 
 function App() {
   const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [search, setSearch] = useState("");
 
   const addToCart = (product) => {
@@ -76,46 +74,46 @@ function App() {
   return (
     <div>
       <Header
-        cartCount={cart.length}
-        search={search}
-        setSearch={setSearch}
-      />
+  cartCount={cart.length}
+  search={search}
+  setSearch={setSearch}
+  onCartClick={() => setIsCartOpen(true)}
+/>
 
-      <Hero />
+      <section id="home">
+        <Hero />
+      </section>
+
       <OfferBanner />
 
-<BestSellers />
+      <BestSellers />
 
-<WhyChooseUs />
+      <section id="products">
+        <Products
+          addToCart={addToCart}
+          search={search}
+        />
+      </section>
 
-<Reviews />
 
-<FAQ />
-<About />
+      <WhyChooseUs />
 
-<Products
-  addToCart={addToCart}
-  search={search}
-/>
+      <Reviews />
 
-      <Cart
-        cart={cart}
-        removeFromCart={removeFromCart}
-        increaseQuantity={increaseQuantity}
-        decreaseQuantity={decreaseQuantity}
-      />
+      <FAQ />
 
-      {cart.length > 0 && (
-        <Checkout
+      <Footer />
+      <CartDrawer
+  isOpen={isCartOpen}
+  onClose={() => setIsCartOpen(false)}
   cart={cart}
+  removeFromCart={removeFromCart}
+  increaseQuantity={increaseQuantity}
+  decreaseQuantity={decreaseQuantity}
   placeOrder={placeOrder}
 />
-      )}
 
-      <Contact />
-      <Footer />
       <WhatsAppButton />
-      <BottomNav />
     </div>
   );
 }

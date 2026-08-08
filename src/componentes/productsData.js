@@ -1,15 +1,27 @@
 const products = [
   // 🌿 Veg Pickles
   {
-    category: "Veg",
-    name: "🥭 Mango Pickle",
-    image: "/images/mango-pickle.jpg",
-    prices: {
-      "250g": 1,
-      "500g": 1,
-      "1kg": 1,
-    },
+  category: "Veg",
+  name: "🥭 Mango Pickle",
+
+  // Main card photo
+  image: "/images/mango-pickle-main.jpg",
+
+  // Product open/click chesinappudu gallery kosam 5 photos
+  images: [
+    "/images/mango-pickle-main.jpg",
+    "/images/mango-pickle-1.jpg",
+    "/images/mango-pickle-2.jpg",
+    "/images/mango-pickle-3.jpg",
+    "/images/mango-pickle-4.jpg",
+  ],
+
+  prices: {
+    "250g": 219,
+    "500g": 349,
+    "1kg": 699,
   },
+},
   {
     category: "Veg",
     name: "🍏 Amla Pickle",
@@ -22,6 +34,7 @@ const products = [
   {
     category: "Veg",
     name: "🍋 Lemon Pickle",
+    image: "/images/lemon-pickle-main.jpg",
     prices: {
       "250g": 219,
       "500g": 399,

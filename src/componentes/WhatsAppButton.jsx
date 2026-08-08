@@ -1,5 +1,7 @@
+import whatsapp from "../assets/whatsapp.png";
+
 function WhatsAppButton() {
-  const phone = "917995272217"; //
+  const phone = "917995272217";
 
   return (
     <a
@@ -10,21 +12,19 @@ function WhatsAppButton() {
         position: "fixed",
         bottom: "20px",
         right: "20px",
-        background: "#25D366",
-        color: "white",
-        width: "60px",
-        height: "60px",
-        borderRadius: "50%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        textDecoration: "none",
-        fontSize: "30px",
-        boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
         zIndex: 999,
       }}
     >
-      💬
+      <img
+        src={whatsapp}
+        alt="WhatsApp"
+        style={{
+          width: "55px",
+          height: "55px",
+          borderRadius: "50%",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
+        }}
+      />
     </a>
   );
 }
